@@ -58,8 +58,7 @@ const authenticatedUser = (username,password)=>{ //returns boolean
 regd_users.post("/login", (req, res) => {
 	 console.log("Received POST request to /login");
     //Write your code here
-    const username = req.query.username;
-    const password = req.query.password;
+	const { username, password } = req.body;
 
     if (!username || !password) {
         return res.status(404).json({ message: "Error logging in. Username/Password not recognized. 404 error." });
@@ -114,7 +113,8 @@ regd_users.put("/auth/reviews/:isbn", (req, res) => {
 	
     const username = req.session.authorization.username; // Assuming username is sent in the request query
     const isbn = req.params.isbn;
-    const reviews = req.body.reviews; // Assuming reviews are sent in the request body
+    const reviews = req.query.reviews; // Assuming reviews are sent in the request body
+	
 	
 	console.log("Received PUT request to /auth/reviews/:isbn");
 	console.log("Username:", username);
@@ -131,7 +131,7 @@ regd_users.put("/auth/reviews/:isbn", (req, res) => {
         // Add or update the review for the book
         books[isbn].reviews = reviews;
 		   console.log("Current state of books object after PUT:", books[isbn]);
-        return res.status(200).json({ message: "Review added/updated successfully." });
+        return res.status(200).json({ message: `The review for book with ISBN ${isbn} has been added/updated successfully.` });
 		 
     }
 });

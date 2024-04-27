@@ -10,8 +10,7 @@ let users = require("./auth_users.js").users;
 
 public_users.post("/register", (req,res) => {
   //Write your code here
-    const username = req.query.username;
-  const password = req.query.password;
+    const { username, password } = req.body;
 
   if (username && password) {
     if (!isValid(username)) { 
@@ -119,7 +118,7 @@ booksRouter.get('/reviews/:reviews',function (req, res) {
 });
 
 // Get the book review available in the shop by ISBN
-booksRouter.get('/reviews/isbn/:isbn', (req, res) => {
+booksRouter.get('/reviews/:isbn', (req, res) => {
     const ISBN = req.params.isbn;
     const book = books[ISBN]; // Access the book directly using the ISBN as the key
     
